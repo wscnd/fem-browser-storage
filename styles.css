@@ -1,27 +1,27 @@
 :root {
-    --background-surface: #EFEFEF;
-    --primaryColor: #43281C;
-    --secondaryColor: #333D29;
-    --color3: #7F4F24;
-    --color4: #B08968;
-    --color5: #DDB892;
-    --color6: #EDE0D4;
-    --highlight: #FBF2C6;
+    --background-surface: #efefef;
+    --primaryColor: #43281c;
+    --secondaryColor: #333d29;
+    --color3: #7f4f24;
+    --color4: #b08968;
+    --color5: #ddb892;
+    --color6: #ede0d4;
+    --highlight: #fbf2c6;
 }
 
 body {
     padding: 0;
     margin: 0;
-    font-family: 'Open Sans', sans-serif;
+    font-family: "Open Sans", sans-serif;
 }
 
-body>header {
+body > header {
     position: fixed;
     width: 100%;
     top: 0;
 }
 
-body>main {
+body > main {
     margin: auto;
     margin-top: 60px;
     max-width: 500px;
@@ -112,14 +112,14 @@ button {
 
 #menu h4 {
     margin: 8px 0 0 12px;
-    color: #333D29;
+    color: #333d29;
     font-size: 18px;
     font-weight: bold;
 }
 
 #menu .price {
     margin: 0px 0 0px 12px;
-    color:#B08968
+    color: #b08968;
 }
 
 #details header {
@@ -127,7 +127,7 @@ button {
     flex-direction: row;
 }
 
-#details header>a {
+#details header > a {
     display: block;
     flex: 1;
     text-decoration: none;
@@ -176,7 +176,7 @@ button {
 
 #order .empty {
     text-align: center;
-    color: var(--color3)
+    color: var(--color3);
 }
 
 #order ul {
@@ -185,7 +185,6 @@ button {
     margin: 12px;
     border-radius: 5px;
     box-shadow: 2px 2px 10px silver;
-    
 }
 
 #order li {
@@ -215,7 +214,6 @@ button {
     text-align: right;
     margin-right: 16px;
     font-size: 17px;
-
 }
 
 #order .toolbar span {
@@ -223,7 +221,8 @@ button {
     padding: 0 8px;
 }
 
-#order .price, #order .price-total {
+#order .price,
+#order .price-total {
     color: var(--secondaryColor);
     flex: 1;
 
@@ -236,4 +235,3 @@ button {
     flex: 2;
     text-align: left;
 }
-
