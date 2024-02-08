@@ -2,6 +2,20 @@ import Menu from "./Menu.js";
 
 const Order = {
   cart: [],
+  load: function () {
+    if (localStorage.getItem("cm-cart")) {
+      try {
+        this.cart = JSON.parse(localStorage.getItem("cm-cart"));
+        this.render();
+      } catch (e) {
+        localStorage.removeItem("cm-cart");
+        console.error("Data in Web Storage is corrupted");
+      }
+    }
+  },
+  save: () => {
+    localStorage.setItem("cm-cart", JSON.stringify(Order.cart));
+  },
   add: async (id) => {
     const product = await Menu.getProductById(id);
     const results = Order.cart.filter(
@@ -27,6 +41,7 @@ const Order = {
     Order.render();
   },
   render: function () {
+    this.save();
     if (Order.cart.length == 0) {
       document.querySelector("#order").innerHTML = `
                 <p class="empty">Your order is empty</p>
