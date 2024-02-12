@@ -1,20 +1,32 @@
 import Menu from "./Menu.js";
+import { openDB } from "idb";
 
 const Order = {
+  key: "cart",
+  storeName: "order",
   cart: [],
-  load: function () {
-    if (localStorage.getItem("cm-cart")) {
+  openDB: async () =>
+    await openDB(Order.key, 1, {
+      async upgrade(db) {
+        await db.createObjectStore(Order.storeName);
+      },
+    }),
+  load: async () => {
+    const db = await Order.openDB();
+    const cart = await db.get(Order.storeName, Order.key);
+    if (cart) {
       try {
-        this.cart = JSON.parse(localStorage.getItem("cm-cart"));
-        this.render();
-      } catch (e) {
-        localStorage.removeItem("cm-cart");
-        console.error("Data in Web Storage is corrupted");
+        Order.cart = cart;
+        console.log("cart:", cart);
+        Order.render();
+      } catch (error) {
+        console.error("Data in IndexDB is corrupted");
       }
     }
   },
-  save: () => {
-    localStorage.setItem("cm-cart", JSON.stringify(Order.cart));
+  save: async () => {
+    const db = await Order.openDB();
+    await db.put(Order.storeName, Order.cart, Order.key);
   },
   add: async (id) => {
     const product = await Menu.getProductById(id);
@@ -40,8 +52,8 @@ const Order = {
     Order.cart = [];
     Order.render();
   },
-  render: function () {
-    this.save();
+  render: () => {
+    Order.save();
     if (Order.cart.length == 0) {
       document.querySelector("#order").innerHTML = `
                 <p class="empty">Your order is empty</p>

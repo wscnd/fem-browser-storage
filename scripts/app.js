@@ -11,12 +11,15 @@ window.addEventListener("DOMContentLoaded", () => {
 
 (async function () {
   if (navigator.storage && navigator.storage.persist) {
-    if (!(await navigator.storage.persisted())) {
-      const result = await navigator.storage.persist();
-      console.log(`Was Persistent Storage Request granted? ${result}`);
-    } else {
-      console.log("Persistent Storage already granted");
-    }
+    navigator.storage.persist().then((persistent) => {
+      if (persistent) {
+        console.log(
+          "Storage will not be cleared except by explicit user action"
+        );
+      } else {
+        console.log("Storage may be cleared by the UA under storage pressure.");
+      }
+    });
   }
 })();
 
