@@ -30,6 +30,13 @@ const Menu = {
       }
     }
     Menu.render();
+
+    if (Menu.data) {
+      const imageCache = await caches.open("cm-images");
+      Menu.data.forEach((c) =>
+        imageCache.addAll(c.products.map((p) => `/data/images/${p.image}`))
+      );
+    }
   },
   getProductById: async (id) => {
     if (Menu.data == null) {
