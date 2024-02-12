@@ -2,7 +2,7 @@ import Menu from "./Menu.js";
 import { openDB } from "idb";
 
 const Order = {
-  key: "cart",
+  key: "cm-cart",
   storeName: "order",
   cart: [],
   openDB: async () =>
@@ -17,7 +17,6 @@ const Order = {
     if (cart) {
       try {
         Order.cart = cart;
-        console.log("cart:", cart);
         Order.render();
       } catch (error) {
         console.error("Data in IndexDB is corrupted");
