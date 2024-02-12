@@ -15,14 +15,20 @@ const Menu = {
     }),
   load: async () => {
     const db = await Menu.openDB();
-    if ((await db.count(Menu.storeName)) == 0) {
-      const categories = await API.fetchMenu();
-      categories.forEach(async (c) => {
-        await db.add(Menu.storeName, c);
-      });
+    try {
+      const data = await API.fetchMenu();
+      Menu.data = data;
+      console.log("Data from the network");
+      await db.clear(Menu.storeName);
+      data.forEach(async (category) => await db.add(Menu.storeName, category));
+    } catch (e) {
+      if ((await db.count(Menu.storeName)) > 0) {
+        Menu.data = await db.getAll(Menu.storeName);
+        console.log("Data from the cache");
+      } else {
+        console.log("No data is available");
+      }
     }
-
-    Menu.data = await db.getAll(Menu.storeName);
     Menu.render();
   },
   getProductById: async (id) => {
